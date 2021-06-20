@@ -98,7 +98,8 @@
                             Create Account
                         </h1>
                         <hr class="my-3">
-                        <form action="assets/php/action.php" method="post" clsass="px-3" id="register-form">
+                        <form action="" clsass="px-3" id="register-form" method="post">
+                            <div id="regAlert"></div>
                             <div class="input-group input-group-l form-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text rounded-0">
@@ -132,7 +133,7 @@
                                         <i class="far fa-envelope fa-lg"></i>
                                     </span>
                                 </div>
-                                <input type="email" name="remail" id="remail" class="form-control rounded-0"
+                                <input type="email" name="email" id="remail" class="form-control rounded-0"
                                     placeholder="E-Mail">
                             </div>
                             <div class="input-group input-group-lg form-group">
@@ -247,41 +248,46 @@
             $("#register-box").hide();
         });
 
-        $("#forgot-link").click(function(){
+        $("#forgot-link").click(function() {
             $("#login-box").hide();
             $("#forgot-box").show();
         });
 
-        $("#back-link").click(function(){
+        $("#back-link").click(function() {
             $("#login-box").show();
             $("#forgot-box").hide();
         });
 
-        // // Register ajax request
-        // $("#register-btn").click(function(e){
-        //     if($("#register-form")[0].checkValidity()){
-        //     //   PREVENT PAGE TO REFRESH
-        //        e.preventDefault();
-        //        $("#register-btn").val('Please wait...');
-        //        if($("#password1").val() != $("#password2").val()){
-        //            $('#passError').text('Passowrd do not match');  
-        //            $('#register-btn').val('Sign Up');                  
-        //        }
-        //        else{
-        //            //NOT WORKING SO FAR
-        //         $('#passError').text(''); 
-        //         $.ajax({
-        //             url: 'assets/php/action.php',
-        //             method: 'post',
-        //             data: $("#register-form").serialize() + '&action=register',   // serialize to put in array
-        //             success:function(response){
-        //            $('#register-btn').val('Sign Up'); 
-        //                console.log(response);
-        //             }
-        //         });
-        //        }
-        //    }
-        // });
+        // Register ajax request
+        $("#register-btn").click(function(e){
+            if($("#register-form")[0].checkValidity()){
+            //   PREVENT PAGE TO REFRESH
+               e.preventDefault();
+               $("#register-btn").val('Please wait...');
+               if($("#password1").val() != $("#password2").val()){
+                   $("#passError").text('* Passowrd do not match'); 
+                   //console.log("Not matched"); 
+                   $("#register-btn").val('Sign Up');                
+               }
+               else{
+                $('#passError').text(''); 
+                $.ajax({
+                    url: 'assets/php/action.php',
+                    method: 'post',
+                    data: $("#register-form").serialize()+'&action=register',   // serialize to put in array
+                    success:function(response){
+                   $('#register-btn').val('Sign Up'); 
+                    //    console.log(response);
+                    if(response === 'register'){
+                        window.location = 'home.php';
+                    }else{
+                        $("#regAlert").html(response);
+                    }
+                    }
+                });
+               }
+           }
+        });
 
     });
     </script>

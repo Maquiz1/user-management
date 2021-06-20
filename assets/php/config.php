@@ -1,5 +1,5 @@
 <?php
-    class User {
+    class Database {
         private $dsn = "mysql:host=localhost;dbname=user-management";
         private $dbuser = "root";
         private $dbpass = "Data@2020";
@@ -16,20 +16,21 @@
             return $this->conn;
         }
 
-        //CHECK INPUT
-        public function test_input(){
-            $data = trim($data);
-            $data = stripslashes($data);
-            $data = htmlspecialchars($data);
+        //TEST INPUT
+        public function test_input($data){
+            $data = trim($data);       //Rmeve all white spaces
+            $data = stripslashes($data);  //Remove all slashes
+            $data = htmlspecialchars($data);  //Remove all spcial chras
             return $data;
-        }
+        }       
 
         //ERROR/SUCCESS MESSAGE ALERT
         public function showMessage($type, $message){
             return '<div class="alert alert-'.$type.'alert-dismissible">
                 <button tpe="button" class="close" data-dismiss="alert">&times;</button>   
-                <strong class="text-center">'.&message.'</strong>        
+                <strong class="text-center">'.$message.'</strong>        
             </div>';
         }
     }
+
 ?>
