@@ -152,7 +152,7 @@
                                     </span>
                                 </div>
                                 <input type="password" name="password2" id="password2" class="form-control rounded-0"
-                                    placeholder="Confirm Password">
+                                    placeholder="Confirm Password" value=<?= $_POST['password2']; ?>>
                             </div>
                             <div id="passError" class="text text-danger"></div>
                             <div class="form-group">
@@ -276,7 +276,7 @@
                     method: 'post',
                     data: $("#register-form").serialize()+'&action=register',   // serialize to put in array
                     success:function(response){
-                   $('#register-btn').val('Sign Up'); 
+                    $('#register-btn').val('Sign Up'); 
                     //    console.log(response);
                     if(response === 'register'){
                         window.location = 'home.php';

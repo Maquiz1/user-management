@@ -33,4 +33,6 @@
         }
     }
 
+    $add  = new Database();
+
 ?>

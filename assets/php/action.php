@@ -13,11 +13,13 @@
             $password = password_hash($password1, PASSWORD_DEFAULT);
 
             if($user->user_exists($email)){
+               
                 echo $user->showMessage('warning','Email already registerd');
 
             }else{
+                
                 if($user->register($firstname,$lastname,$username,$password,$email)){
-                    echo 'register';
+                    return 'register';
                     $_SESSION['user'] = $email;
                 }else{
                     echo $user->showMessage('danger','Something went Wrong! try again');
