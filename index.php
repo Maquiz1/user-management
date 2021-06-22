@@ -18,7 +18,7 @@
         <!-- LOGIN FORM START -->
 
         <div class="row justify-content wrapper mt-4" id="login-box">
-            <div class="col-lg-10 mx-auto mx-auto">
+            <div class="col-lg-10 mx-auto my-auto">
                 <div class="card-group myShadow">
                     <div class="card rounded-left p-4" style="flex-grow:1.4;">
                         <h1 class="text-center font-weight-bold text-primary">
@@ -80,7 +80,7 @@
         <!-- REGISTER FORM START HERE -->
 
         <div class="row justify-content wrapper mt-4" id="register-box" style="display: none;">
-            <div class="col-lg-10 mx-auto mx-auto">
+            <div class="col-lg-10 mx-auto my-auto">
                 <div class="card-group myShadow">
                     <div class="card justify-content-center rounded-right myColor p-4">
                         <h1 class="text-center font-weight-bold text-white">Welcome Back</h1>
@@ -181,7 +181,7 @@
         <!-- FORGOT PASSWORD FORM START HERE -->
 
         <div class="row justify-content wrapper mt-4" id="forgot-box" style="display: none;">
-            <div class="col-lg-10 mx-auto mx-auto">
+            <div class="col-lg-10 mx-auto my-auto">
                 <div class="card-group myShadow">
                     <div class="card justify-content-center rounded-right myColor p-4">
                         <h1 class="text-center font-weight-bold text-white">Reset password</h1>
@@ -288,6 +288,39 @@
                }
            }
         });
+
+
+        // LOgin ajax request
+        $("#login-btn").click(function(e){
+            if($("#login-form")[0].checkValidity()){
+            //   PREVENT PAGE TO REFRESH
+               e.preventDefault();
+               $("#register-btn").val('Please wait...');
+               if($("#password1").val() != $("#password2").val()){
+                   $("#passError").text('* Passowrd do not match'); 
+                   //console.log("Not matched"); 
+                   $("#register-btn").val('Sign Up');                
+               }
+               else{
+                $('#passError').text(''); 
+                $.ajax({
+                    url: 'assets/php/action.php',
+                    method: 'post',
+                    data: $("#register-form").serialize()+'&action=register',   // serialize to put in array
+                    success:function(response){
+                    $('#register-btn').val('Sign Up'); 
+                    //    console.log(response);
+                    if(response === 'register'){
+                        window.location = 'home.php';
+                    }else{
+                        $("#regAlert").html(response);
+                    }
+                    }
+                });
+               }
+           }
+        });
+
 
     });
     </script>

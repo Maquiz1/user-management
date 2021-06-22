@@ -42,7 +42,7 @@ class Auth extends Database {
             
 
     public function user_exists($email){
-        $sql = "SELECT 1 FROM users WHERE email= :email";
+        $sql = "SELECT email FROM users WHERE email = :email";
         $stmt = $this->conn->prepare($sql);        
         $result = $stmt->execute(['email' => $email]);
 
