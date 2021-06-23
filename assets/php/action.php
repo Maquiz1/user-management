@@ -1,4 +1,20 @@
 <?php
+
+    session_start();
+
+    //Import PHPMailer classes into the global namespace
+    //These must be at the top of your script, not inside a function
+    use PHPMailer\PHPMailer\PHPMailer;
+    use PHPMailer\PHPMailer\SMTP;
+    use PHPMailer\PHPMailer\Exception;
+
+    //Load Composer's autoloader
+    require 'vendor/autoload.php';
+
+    //Instantiation and passing `true` enables exceptions
+    $mail = new PHPMailer(true);
+
+
     require_once 'auth.php';
     $user = new Auth();
 
@@ -62,6 +78,52 @@
         else{
             echo $user->showMessage('danger','User not found!');
         }
+    }
+
+
+    //HANDLE FORGOT PASSWORD AJAX REQUEST
+    if(isset($_POST['action']) && $_POST['action'] == 'forgot'){
+        $email = $user->test_input($_POST['email']);
+
+        $user_found = $user->currentUsser($email);
+
+
+        if($user_found != null){
+            $token = uniqid(); //generate unique token
+            $token = str_shuffle($token); //use unique every reshuffle
+
+            $user->forgot_password($token,$email);
+                    
+
+            try{
+                //Server settings
+                $mail->isSMTP();
+                $mail->Host = 'smtp.gmail.com';
+                $mail->SMTAuth = true;            
+                $mail->Username = Database::USERNAME;
+                $mail->Password = Database::PASSWORD;
+                $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+                $mail->Port = 587;
+
+                //Recipients
+                $mail->setFrom(Database::USERNAME,'root');
+                $mail->addAddress($email);
+                
+                //Content
+                $mail->isHTML(true);
+                $mail->Subject = 'Reset Password';
+                $mail->Body = '<h3>Click the link link to reset your password.<br><a href="http://loalhost/user-management/reset-pa.php?email='.$email.'&token='.$token.'">http://localhost/user-management/reset-pass.php?email='.$email.'&token='.$token.'</a><br>Regards<br>Admin!</h3>';
+                $mail->send();
+                echo $user->showMessage('success','We have sent you the reset link in your e-mail ID,please check your e-mail!');
+                
+            }catch(Exception $e){
+                echo $user->showMessage('danger','Something went wrong please try again later!');
+                var_dump($mail->addAddress($email));
+            }
+        }else{
+          echo  $user->showMessage('danger','This email is not registerd!');
+        }
+
     }
 
 

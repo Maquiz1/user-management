@@ -1,5 +1,10 @@
 <?php
     class Database {
+
+        const USERNAME = 'manquiz92@gmail.com';
+        const PASSWORD = '123456';
+
+
         private $dsn = "mysql:host=localhost;dbname=user-management";
         private $dbuser = "root";
         private $dbpass = "Data@2020";

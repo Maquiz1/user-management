@@ -211,13 +211,14 @@
                             instructions on your email
                         </p>
                         <form action="#" method="post" clsass="px-3" id="forgot-form">
+                            <div id="forgotAlert"></div>
                             <div class="input-group input-group-l form-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text rounded-0">
                                         <i class="far fa-envelope fa-lg"></i>
                                     </span>
                                 </div>
-                                <input type="email" name="femail" id="femail" class="form-control rounded-0"
+                                <input type="email" name="email" id="femail" class="form-control rounded-0"
                                     placeholder="E-Mail">
                             </div>
                             <div class="clearfix"></div>
@@ -325,6 +326,28 @@
                 }
 
             });
+
+        //FORGOT PASSWORD AJAX request
+        $("#forgot-btn").click(function(e){
+            if($("#forgot-form")[0].checkValidity()){
+                //   PREVENT PAGE TO REFRESH
+                e.preventDefault();
+                $("#forgot-btn").val('Please wait...');
+                $.ajax({
+                        url: 'assets/php/action.php',
+                        method: 'post',
+                        data: $("#forgot-form").serialize()+'&action=forgot',   // serialize to put in array
+                        success:function(response){
+                        $('#forgot-btn').val('Reset Password'); 
+                        $('#forgot-form')[0].reset; 
+                        $('#forgotAlert').html(response);                         
+                        }
+                    });
+                
+                }
+
+            });
+
 
     });
     </script>
