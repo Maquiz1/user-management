@@ -39,19 +39,33 @@ class Auth extends Database {
 
         return true;
 }
-            
 
     public function user_exists($email){
-
-        $sql = 'SELECT email FROM users WHERE email = :email';
-        // $sql = "SELECT `email` FROM `users` WHERE `email` = `:email`";
-        $stmt = $this->conn->prepare($sql);        
-        $result = $stmt->execute(['email' => $email]);
-
-        return false;     
-
+        $query = $this->conn->query("SELECT * FROM users WHERE email = '$email'");
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        if($result){
+            return true;
+        }else{
+            return false;
+        }
     }
 
+    //Login exist user
+    public function login($email){
+        $query = $this->conn->query("SELECT email, password FROM users WHERE email = '$email' AND deleted != 0");
+        $row = $query->fetch(PDO::FETCH_ASSOC);
+        return $row;
+    }
+
+    //current user session
+    public function currentUsser($email){
+        $query = $this->conn->query("SELECT * FROM users WHERE email = '$email' AND deleted != 0");
+        $row = $query->fetch(PDO::FETCH_ASSOC);
+        
+        return $row;
+
+    }
+    
 }
 
 ?>

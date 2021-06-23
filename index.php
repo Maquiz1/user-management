@@ -1,5 +1,12 @@
-<html lang="en">
+<?php 
+    if(isset($_SESSION['user'])){
+        header('location:home.php');
+    }
 
+
+?>
+
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -26,14 +33,15 @@
                         </h1>
                         <hr class="my-3">
                         <form action="#" method="post" clsass="px-3" id="login-form">
+                        <div id="loginAlert"></div>
                             <div class="input-group input-group-l form-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text rounded-0">
                                         <i class="far fa-envelope fa-lg"></i>
                                     </span>
                                 </div>
-                                <input type="email" name="lemail" id="lemail" class="form-control rounded-0"
-                                    placeholder="E-Mail">
+                                <input type="email" name="email" id="lemail" class="form-control rounded-0"
+                                    placeholder="E-Mail" value="<?php if(isset($_COOKIE['email'])){ echo $_COOKIE['email']; } ?>">
                             </div>
                             <div class="input-group input-group-lg form-group">
                                 <div class="input-group-prepend">
@@ -42,11 +50,12 @@
                                     </span>
                                 </div>
                                 <input type="password" name="password" id="password" class="form-control rounded-0"
-                                    placeholder="Password">
+                                    placeholder="Password" value="<?php if(isset($_COOKIE['password'])){ echo $_COOKIE['password']; } ?>">
                             </div>
                             <div class="form-group">
                                 <div class="custom-control custom-checkbox float-left">
-                                    <input type="checkbox" name="rem" class="custom-conrol-input" id="customCheck">
+                                    <input type="checkbox" name="rem" class="custom-conrol-input" id="customCheck"
+                                    <?php if(isset($_COOKIE['email'])) { ?> checked <?php } ?>>
                                     <label for="customCheck">Remember me</label>
                                 </div>
                                 <div class="forgot float-right">
@@ -78,6 +87,7 @@
         <!-- LOGIN FORM END -->
 
         <!-- REGISTER FORM START HERE -->
+       
 
         <div class="row justify-content wrapper mt-4" id="register-box" style="display: none;">
             <div class="col-lg-10 mx-auto my-auto">
@@ -290,37 +300,31 @@
         });
 
 
-        // LOgin ajax request
+        // Login ajax request
         $("#login-btn").click(function(e){
             if($("#login-form")[0].checkValidity()){
-            //   PREVENT PAGE TO REFRESH
-               e.preventDefault();
-               $("#register-btn").val('Please wait...');
-               if($("#password1").val() != $("#password2").val()){
-                   $("#passError").text('* Passowrd do not match'); 
-                   //console.log("Not matched"); 
-                   $("#register-btn").val('Sign Up');                
-               }
-               else{
-                $('#passError').text(''); 
+                //   PREVENT PAGE TO REFRESH
+                e.preventDefault();
+                $("#login-btn").val('Please wait...');
                 $.ajax({
-                    url: 'assets/php/action.php',
-                    method: 'post',
-                    data: $("#register-form").serialize()+'&action=register',   // serialize to put in array
-                    success:function(response){
-                    $('#register-btn').val('Sign Up'); 
-                    //    console.log(response);
-                    if(response === 'register'){
-                        window.location = 'home.php';
-                    }else{
-                        $("#regAlert").html(response);
-                    }
-                    }
-                });
-               }
-           }
-        });
+                        url: 'assets/php/action.php',
+                        method: 'post',
+                        data: $("#login-form").serialize()+'&action=login',   // serialize to put in array
+                        success:function(response){
+                        $('#login-btn').val('Sign in'); 
+                        // console.log(response);  //print console to screen
+                        if(response){
+                            window.location = 'home.php';
+                        }else{
+                            $("#loginAlert").html(response);
+                        }
+                        
+                        }
+                    });
+                
+                }
 
+            });
 
     });
     </script>
