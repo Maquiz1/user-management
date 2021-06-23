@@ -1,6 +1,38 @@
 <?php 
-    if(isset($_SESSION['user'])){
-        header('location:home.php');
+
+    require_once 'assets/php/auth.php';
+    $user = new Auth();
+    $msg = '';
+
+    if(isset($_GET['email']) && isset($_GET['token'])){
+        $email = $user->test_input($_GET['email']);
+        $token = $user->test_input($_GET['token']);
+
+        $auth_user = $user->reset_pass_auth($email, $token);
+
+        if($auth_user != null){
+            if(isset($_POST['submit'])){
+                $newpass = $_POST['pass'];
+                $cnewpss = $_POST['cpass'];
+
+                $hnewpass = password_($newpass, PASSWORD_DEFAULT);
+
+                if($newpass == $cnewpss){
+                    $user->update_new_pass($hnewpass,$email);
+                    $msg = 'Passowrd Changed Succseefully!<br><a href="index.php">Login Here!</a>';
+                }else{
+                    $msg = 'Passowrd did not Match!';
+                }
+            }
+        }
+        else{
+            header('location:index.php');
+            exit();
+        }
+    }
+    else {
+        header('location:index.php');
+        exit();
     }
 
 
@@ -25,7 +57,7 @@
     <div class="container">
         <!-- LOGIN FORM START -->
 
-        <div class="row justify-content wrapper mt-4" id="login-box">
+        <div class="row justify-content wrapper mt-4">
             <div class="col-lg-10 mx-auto my-auto">
                 <div class="card-group myShadow">
 
@@ -41,8 +73,8 @@
                             Reset Password!
                         </h1>
                         <hr class="my-3">
-                        <form action="#" method="post" clsass="px-3" id="login-form">
-
+                        <form action="#" method="post" clsass="px-3">
+                            <div class="text-center lead my-2"><?= $msg; ?></div> 
                             <div class="input-group input-group-lg form-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text rounded-0">
