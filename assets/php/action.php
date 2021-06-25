@@ -47,38 +47,48 @@
 
 
     //HANDLE LOGIN AJAX REQUEST
-    if(isset($_POST['action']) && $_POST['action'] == 'login'){
-        $email        = $user->test_input($_POST['email']);
-        $password     = $user->test_input($_POST['password']);
+    // if(isset($_POST['action']) && $_POST['action'] == 'login'){
+        if (isset($_POST['login'])) {
+            if (!empty($_POST['email']) && !empty($_POST['password'])) {
+                if (isset($_POST['email']) && isset($_POST['password'])) {
+                    $email        = $user->test_input($_POST['email']);
+                    $password     = $user->test_input($_POST['password']);
     
-        // $password = password_hash($password, PASSWORD_DEFAULT);
+                    // $password = password_hash($password, PASSWORD_DEFAULT);
 
-        $loggedInUser = $user->login($email);
+                    $loggedInUser = $user->login($email);
 
-        if($loggedInUser != null ){
-            if(password_verify($password, $loggedInUser['password'])){
-                //now check remember me
-                if(!empty($_POST['rem'])){
-                    setcookie("email", $email, time()+(30+24+60+60), '/');
-                    setcookie("password", $password, time()+(30+24+60+60), '/');
+                    if ($loggedInUser != null) {
+                        if (password_verify($password, $loggedInUser['password'])) {
+                            //now check remember me
+                            if (!empty($_POST['rem'])) {
+                                setcookie("email", $email, time()+(30+24+60+60), '/');
+                                setcookie("password", $password, time()+(30+24+60+60), '/');
+                            } else {
+                                setcookie("email", "", 1, '/');
+                                setcookie("password", "", 1, '/');
+                            }
+                            // echo 'login';
+                            $_SESSION['user'] = $email;
+                            header('Location: ../../home.php'); // if using ajax remove this redirect
+                        }
+                      //if incorrect password
+                        else {
+                            echo $user->showMessage('daner', 'Password is incorrect');
+                        }
+                    }
+                    //if user not found
+                    else {
+                        echo $user->showMessage('danger', 'User not found!');
+                    }
                 }else{
-                    setcookie("email","",1, '/');
-                    setcookie("password","",1, '/');
+                    echo $user->showMessage('danger','Something went wrong during login');
                 }
-                echo 'login';
-                $_SESSION['user'] = $email;
+            }else{
+                echo $user->showMessage('danger','Password or username can not be empty');
+            }
 
-            }
-            //if incorrect password
-            else{
-                echo $user->showMessage('daner','Password is incorrect');
-            }
         }
-        //if user not found
-        else{
-            echo $user->showMessage('danger','User not found!');
-        }
-    }
 
 
     //HANDLE FORGOT PASSWORD AJAX REQUEST
@@ -118,7 +128,7 @@
                 
             }catch(Exception $e){
                 echo $user->showMessage('danger','Something went wrong please try again later!');
-                var_dump($mail->addAddress($email));
+
             }
         }else{
           echo  $user->showMessage('danger','This email is not registerd!');

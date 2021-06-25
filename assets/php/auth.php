@@ -97,6 +97,81 @@ class Auth extends Database {
             return true;
         }
     
+
+        //ADD NEW note
+        public function add_new_note($uid,$title,$note){
+            $sql = "INSERT INTO notes (uid, title, note) VALUES (:uid,:title,:note)";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute(
+                [
+                    'uid'   => $uid, 
+                    'title' => $title, 
+                    'note'  => $note
+                ]
+            );
+            return true;
+        }
+
+
+        //fetch all notes of a user
+        public function get_notes($uid){
+            $sql = "SELECT * FROM notes WHERE uid = :uid";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute(
+                [
+                    'uid'=>$uid
+                ]
+            );
+
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+
+
+        }
+
+
+        //EDIT NOTE OF A USER
+        public function edit_note($id){
+            $sql = "SELECT * FROM notes WHERE id = :id";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute(
+                [
+                    'id' => $id
+                ]
+            );
+
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            return $result;
+        }
+
+        //UPDATE NOTE OF A USER
+        public function update_note($id,$title,$note){
+            $sql = "UPDATE notes SET title = :title, note = :note ,updated_at = NOW() WHERE id=:id";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute(
+                [
+                    'id' => $id,
+                    'title' => $title,
+                    'note' => $note
+                ]
+            );
+
+            return $stmt;
+        }
+
+    //DELETE NOTE OF A USER
+    public function delete_note($id){
+        $sql = "DELETE FROM notes WHERE id=:id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute(
+            [
+                'id' => $id
+            ]
+        );
+
+        return true;
+    }
 }
 
 ?>
