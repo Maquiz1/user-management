@@ -172,6 +172,137 @@ class Auth extends Database {
 
         return true;
     }
+
+
+    //UPDATE USER PROFILE
+    public function update_profile($username, $firstname, $lastname, $gender, $dob, $phone, $newImage, $id){
+
+        $sql = "UPDATE users SET username = :username, firstname = :firstname, lastname = :lastname, gender = :gender, 
+                dob = :dob, phone = :phone, photo = :newImage WHERE id = :id AND deleted !=0";
+        $stmt = $this->conn->prepare($sql);
+        
+        $result = $stmt->execute(
+            [
+            'username' => $username,
+            'firstname' => $firstname,
+            'lastname' => $lastname,
+            'gender'   => $gender,
+            'dob'      => $dob,
+            'phone'    => $phone,
+            'newImage' => $newImage,
+            'id'       => $id
+            ]
+        );
+
+            return $result;
+    }
+
+    //CHANGE USER PASSWORD
+    public function change_password($pass, $id){
+
+        $sql = "UPDATE users SET password = :pass WHERE id = :id AND deleted !=0";
+        $stmt = $this->conn->prepare($sql);
+        
+        $result = $stmt->execute(
+            [
+            'pass' => $pass,
+            'id'       => $id
+            ]
+        );
+
+        if($result){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    //VERIFY EMAIL OF A USER
+    public function verify_email($email){
+        $sql = "UPDATE users SET verified = 1 WHERE email = :email AND deleted !=0";
+        $stmt = $this->conn->prepare($sql);
+        
+        $result = $stmt->execute(
+            [
+            'email' => $email
+            ]
+        );
+
+        if($result){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+
+    //SEND FEEDBACK TO ADMIN
+    public function send_feedback($sub,$feed,$uid){
+        $sql = "INSERT INTO feedback (uid, subject, feedback) VALUES (:uid,:sub,:feed)";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute(
+            [
+                'uid'   => $uid, 
+                'sub' => $sub, 
+                'feed'  => $feed
+            ]
+        );
+
+        if($stmt){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    //INSERT NOTIFICATION
+    public function notification($uid,$type,$message){
+        $sql = "INSERT INTO notification (uid, type, message) VALUES (:uid,:type,:message)";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute(
+            [
+                'uid'      => $uid, 
+                'type'     => $type, 
+                'message'  => $message
+            ]
+        );
+
+        if($stmt){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    //INSERT NOTIFICATION
+    public function fetchNotification($uid){
+        $sql = "SELECT * FROM notification WHERE uid = :uid AND type='user'";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute(
+            [
+                'uid' => $uid
+            ]
+        );
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+    }
+
+    //DELETE NOTIFICATION
+    public function removeNotification($id){
+        $sql = "DELETE FROM notification WHERE id = :id AND type='user'";
+        $stmt = $this->conn->prepare($sql);
+        $result = $stmt->execute(
+            [
+                'id' => $id
+            ]
+        );
+        
+        if($result){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }
 
 ?>

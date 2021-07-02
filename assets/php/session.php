@@ -24,6 +24,7 @@ $cphoto = $data['photo'];
 $created_at = $data['created_at'];
 $verified = $data['verified'];
 $deleted= $data['deleted'];
+$cphone = $data['phone'];
 
 
 if($verified == 0){
@@ -34,4 +35,7 @@ if($verified == 0){
 
 //use only first name
 $fname = strtok($cfirstname, " ");
+
+
+$reg_on = date('d M Y', strtotime($created_at));
 ?>

@@ -29,9 +29,10 @@ require_once 'assets/php/header.php';
                 &nbsp;Add New Notes
             </a>
         </h5>
+        
         <div class="card-body">
             <div class="table-responsive" id="showNote">              
-
+                <p class="text-center lead mt-5">Please wait...</p>
 
             </div>
         </div>
@@ -293,6 +294,19 @@ require_once 'assets/php/header.php';
                 }
             });
         }
+
+        //CHECK NOTIFICATION OF A USER
+        checkNotification();
+        function checkNotification(){
+            $.ajax({
+            url: 'assets/php/process.php',
+            method:'post',
+            data:{ action:'checkNotification' },
+            success:function(response) {
+                    $("#checkNotification").html(response);  //selct the id(checkNotification) from notification header
+                }
+            });
+        };
     });
 </script>
 

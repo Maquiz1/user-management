@@ -37,6 +37,25 @@
                 if($user->register($firstname,$lastname,$username,$password,$email)){
                     echo 'register';
                     $_SESSION['user'] = $email;
+
+                    //Server settings
+                    $mail->isSMTP();
+                    $mail->Host = 'smtp.gmail.com';
+                    $mail->SMTAuth = true;            
+                    $mail->Username = Database::USERNAME;
+                    $mail->Password = Database::PASSWORD;
+                    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+                    $mail->Port = 587;
+
+                    //Recipients
+                    $mail->setFrom(Database::USERNAME,'Winstone');
+                    $mail->addAddress($email);     //use current email
+                    
+                    //Content
+                    $mail->isHTML(true);
+                    $mail->Subject = 'E-mail Verification';
+                    $mail->Body = '<h3>Click the link link to verify your E-mail.<br><a href="http://loalhost/user-management/verify_email.php?email='.$email.'">http://loalhost/user-management/verify_email.php?email='.$email.'</a><br>Regards<br>Admin!</h3>';
+                    $mail->send();
                     
                 }else{
                     echo $user->showMessage('danger','Something went Wrong! try again');

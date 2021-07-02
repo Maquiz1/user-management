@@ -1,8 +1,6 @@
 <?php
 require_once 'assets/php/session.php';
-// echo '<pre>';
-// print_r($data);
-// echo '<pre>';
+
 ?>
 
 <?php 
@@ -33,7 +31,7 @@ require_once 'assets/php/session.php';
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"> -->
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.25/datatables.min.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.25/datatables.min.css" />
     <style type="text/css">
     @import url('https://fonts.googleapis.com/css2?family=Maven+Pro&display=swap');
 
@@ -61,22 +59,27 @@ require_once 'assets/php/session.php';
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
                         <!-- make active -->
-                        <a class="nav-link <?= (basename($_SERVER['PHP_SELF']) == "home.php") ? "active" : ""; ?>" href="home.php"><i class="fas fa-home"></i>&nbsp;Home</a>
+                        <a class="nav-link <?= (basename($_SERVER['PHP_SELF']) == "home.php") ? "active" : ""; ?>"
+                            href="home.php"><i class="fas fa-home"></i>&nbsp;Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link  <?= (basename($_SERVER['PHP_SELF']) == "profile.php") ? "active" : ""; ?>" href="profile.php"><i class="fas fa-user"></i>&nbsp;Profile</a>
+                        <a class="nav-link  <?= (basename($_SERVER['PHP_SELF']) == "profile.php") ? "active" : ""; ?>"
+                            href="profile.php"><i class="fas fa-user"></i>&nbsp;Profile</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link  <?= (basename($_SERVER['PHP_SELF']) == "feedback.php") ? "active" : ""; ?>" href="feedback.php"><i class="fas fa-comment-dots"></i>&nbsp;Feedback</a>
+                        <a class="nav-link  <?= (basename($_SERVER['PHP_SELF']) == "feedback.php") ? "active" : ""; ?>"
+                            href="feedback.php"><i class="fas fa-comment-dots"></i>&nbsp;Feedback</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link  <?= (basename($_SERVER['PHP_SELF']) == "notification.php") ? "active" : ""; ?>" href="notification.php"><i class="fas fa-bell"></i>&nbsp;Notification</a>
+                        <a class="nav-link  <?= (basename($_SERVER['PHP_SELF']) == "notification.php") ? "active" : ""; ?>"
+                            href="notification.php"><i class="fas fa-bell"></i>&nbsp;Notification&nbsp;<span
+                                id="checkNotification"></span></a>     
                     </li>
 
                     <!-- Dropdown -->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-                            <i class="fas fa-user-cog"></i>&nbsp;Hi! <?= $cusername; ?>
+                            <i class="fas fa-user-cog"></i>&nbsp;Welcome! <?= $cusername; ?>
                         </a>
 
                         <!-- define drop down menu  -->
