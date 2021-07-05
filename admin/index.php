@@ -1,3 +1,21 @@
+<?php 
+    session_start();
+    if(isset($_SESSION['username'])){
+        header('location:admin-dashboard.php');
+        exit();
+    }
+
+    //Count Visitors
+    include_once 'assets/php/config.php';
+    $db = new Database();
+
+    $sql = "UPDATE visitors SET hits = hits+1 WHERE id = 0";
+    $stmt = $db->conn->prepare($sql);
+    $stmt->execute();
+?>
+
+
+
 <html lang="en">
 
 <head>
@@ -32,6 +50,8 @@
                     </div>
                     <div class="card-body">
                         <form action="#" class="px-3" method="post" id="admin-login-form">
+                        <!-- admin alert here  -->
+                        <div id="adminLoginAlert"></div>     
                             <div class="form-group">
                                 <input type="text" name="username" class="form-control form-control-lg rounded-0"
                                     placeholder="Username" required autofocus>
@@ -65,6 +85,32 @@
         integrity="sha512-RXf+QSDCUQs5uwRKaDoXt55jygZZm2V++WUZduaU/Ui/9EGp3f/2KZVahFZBKGH0s774sd3HmrhUy+SgOFQLVQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+    <script type="text/javascript">
+    $(document).ready(function() {
+        // AdminLogin ajax request
+        $("#adminLoginBtn").click(function(e){
+            if($("#admin-login-form")[0].checkValidity()){
+            //   PREVENT PAGE TO REFRESH
+               e.preventDefault();
+               $("#adminLoginBtn").val('Please wait...');
+                $.ajax({
+                    url: 'assets/php/admin-action.php',
+                    method: 'post',
+                    data: $("#admin-login-form").serialize()+'&action=adminLogin',   // serialize to put in array
+                    success:function(response){
+                    if(response = 'admin_login'){
+                        window.location = 'admin-dashboard.php';
+                    }else{
+                        $("#adminLoginAlert").html(response);
+                    }
+                    $("#adminLoginBtn").val('Login');
+                    }
+                });
+               }
+        });
+
+    });
+    </script>
 
 </body>
 

@@ -307,6 +307,18 @@ require_once 'assets/php/header.php';
                 }
             });
         };
+
+        //fix bugs// check if user is logged in or not
+            $.ajax({
+            url: 'assets/php/process.php',
+            method:'post',
+            data:{ action:'checkUser' },
+            success:function(response) {
+                    if(response == 'bye'){
+                        window.location = 'index.php';
+                    }
+                }
+            });
     });
 </script>
 
