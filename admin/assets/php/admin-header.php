@@ -106,7 +106,7 @@
                         Feedback
                     </a>
                     <a href="admin-notification.php" class="list-group-item text-light admin-link
-                    <?= (basename($_SERVER['PHP_SELF']) == 'admin-notification.php.php') ? "nav-active" : "" ; ?>">
+                    <?= (basename($_SERVER['PHP_SELF']) == 'admin-notification.php') ? "nav-active" : "" ; ?>">
                         <i class="fas fa-bell"></i>&nbsp;&nbsp;
                         Notification
                         &nbsp;<span id="checkNotification"></span>
@@ -133,6 +133,8 @@
                     </a>
                 </div>
             </div>
+
+
             <!-- admin navbar header  -->
             <div class="col">
                 <div class="row">
@@ -146,3 +148,4 @@
                         </a>
                     </div>
                 </div>
+            

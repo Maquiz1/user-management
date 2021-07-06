@@ -80,7 +80,6 @@ $(document).ready(
                             note_id: note_id
                         },
                         success: function(response) {
-                            console.log(response);
                             Swal.fire(
                                 'Deleted!',
                                 'A User has been deleted.',

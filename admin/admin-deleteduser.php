@@ -81,7 +81,6 @@ $(document).ready(
                             res_id: res_id
                         },
                         success: function(response) {
-                            // console.log(response);
                             Swal.fire(
                                 'Restored!',
                                 'A User has been Restored Successfully.',

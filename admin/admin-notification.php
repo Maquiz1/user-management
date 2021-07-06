@@ -36,48 +36,49 @@ $(document).ready(function() {
             url: 'assets/php/admin-action.php',
             method: 'post',
             data: {
-                action: 'fetchNotification'
+                action: 'fetchAllNotification'
             },
             success: function(response) {
                 $("#showNotification").html(response);
+                
             }
         });
     }
 
     //check if notification exists
-    // checkNotification();
-    // function checkNotification(){
-    //     $.ajax({
-    //         url: 'assets/php/admin-action.php',
-    //         method: 'post',
-    //         data: {
-    //             action: 'checkNotification'
-    //         },
-    //         success: function(response) {
-    //             $("#checkNotification").html(response);
-    //         }
-    //     });
+    checkNotification();
+    function checkNotification(){
+        $.ajax({
+            url: 'assets/php/admin-action.php',
+            method: 'post',
+            data: {
+                action: 'checkNotification'
+            },
+            success: function(response) {
+                $("#checkNotification").html(response);
+            }
+        });
 
-    // }
+    }
 
     //remove notification ajax request
-    // $("body").on("click",".close",function(e){
-    //     e.preventDefault();
+    $("body").on("click",".close",function(e){
+        e.preventDefault();
 
-    //     notification_id = $(this).attr('id');
+        notification_id = $(this).attr('id');
 
-    //     $.ajax({
-    //         url: 'assets/php/admin-action.php',
-    //         method: 'post',
-    //         data: {
-    //             notification_id : notification_id
-    //         },
-    //         success: function(response) {
-    //             fetchAllNotification();
-    //             checkNotification();
-    //         }
-    //     });
-    // });
+        $.ajax({
+            url: 'assets/php/admin-action.php',
+            method: 'post',
+            data: {
+                notification_id : notification_id
+            },
+            success: function(response) {
+                fetchAllNotification();
+                checkNotification();
+            }
+        });
+    });
 });
 
 </script>

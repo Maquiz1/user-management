@@ -157,10 +157,6 @@
             echo '<h3 class="text-center text-seconadry">:( No any user Deleted yet!</h3>';
         }
 
-    }else{
-        
-            echo 'Something Went Wrong,try Again later!';
-        
     }
 
 
@@ -174,43 +170,44 @@
 
     //HANDLE FETCH ALL NOTES AJAX REQUEST
     if(isset($_POST['action']) && $_POST['action'] == 'fetchAllNotes'){
+
         $output = '';
         $note = $admin->fetchAllNotes();
 
         if($note){
             $output .= '<table>
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Username</th>
-                        <th>E-Mail</th>
-                        <th>Note Title</th>
-                        <th>note</th>
-                        <th>Written on</th>
-                        <th>Updated on</th>
-                        <th>Action</th>
-                    </tr>
-                </thead> 
-                <tbody>';
-                    foreach($data as $row){
-                        $output .='</tr>  
-                        <td>'.$row['id'].'</td>
-                        <td>'.$row['firstname'].'</td>
-                        <td>'.$row['lastname'].'</td>
-                        <td>'.$row['username'].'</td>
-                        <td>'.$row['email'].'</td>
-                        <td>'.$row['title'].'</td>
-                        <td>'.$row['note'].'</td>
-                        <td>'.$row['creaed_at'].'</td>
-                        <td>'.$row['updated_at'].'</td>
-                        <td>
-                            <a href="#" id="'.$row['id'].'" title="Delete Note" class="text-danger deleteNoteIcon">
-                                <i class="fas fa-trash-alt fa-lg"></i>&nbsp;&nbsp;
-                            </a>
-                        </td>
-                        </tr>';
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Username</th>
+                                    <th>E-Mail</th>
+                                    <th>Note Title</th>
+                                    <th>note</th>
+                                    <th>Written on</th>
+                                    <th>Updated on</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead> 
+                            <tbody>';
+                                foreach($note as $row){
+                                    $output .='</tr>  
+                                                    <td>'.$row['id'].'</td>
+                                                    <td>'.$row['firstname'].'</td>
+                                                    <td>'.$row['lastname'].'</td>
+                                                    <td>'.$row['username'].'</td>
+                                                    <td>'.$row['email'].'</td>
+                                                    <td>'.$row['title'].'</td>
+                                                    <td>'.$row['note'].'</td>
+                                                    <td>'.$row['created_at'].'</td>
+                                                    <td>'.$row['updated_at'].'</td>
+                                                    <td>
+                                                        <a href="#" id="'.$row['id'].'" title="Delete Note" class="deleteNoteIcon text-danger">
+                                                            <i class="fas fa-trash-alt fa-lg"></i>&nbsp;&nbsp;
+                                                        </a>
+                                                    </td>
+                                                </tr>';
                     }
                     $output .= '</tbody>
                     </table>';
@@ -299,7 +296,7 @@ if (isset($_POST['message'])) {
 
 
 //HANDLE  FETCH NOTIFICATION admin AJAX REQUEST
-if (isset($_POST['action']) && $_POST['action'] == 'fetchNotification') {
+if (isset($_POST['action']) && $_POST['action'] == 'fetchAllNotification') {
     $notification = $admin->fetchNotification();
     $output = '';
 
@@ -315,7 +312,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'fetchNotification') {
                 '.$row['message'].' by '.$row['username'].'
             </p>
             <hr class="my-2">
-            <p class="mb-0 float-left"><b>User E-Mail</b>'.$row['email'].'</p>
+            <p class="mb-0 float-left"><b>User E-Mail:</b> '.' '.$row['email'].'</p>
             <p class="mb-0 float-right">'.$admin->timeInAgo($row['created_at']).'</p>
             <div class="clearfix"></div>
         </div>';
