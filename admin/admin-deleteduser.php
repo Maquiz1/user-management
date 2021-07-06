@@ -3,7 +3,7 @@
 ?>
 
 <div class="row">
-<div class="col-lg-12">
+    <div class="col-lg-12">
         <div class="card my-2 border-danger">
             <div class="card-header bg-danger text-white">
                 <h4 class="m-0">All Deleted Users</h4>
@@ -20,10 +20,10 @@
 
 
 <!-- FOOTER AREA  -->
-            </div>
+</div>
 
-        </div>
-    </div>
+</div>
+</div>
 
 
 <!-- to use data table  -->
@@ -48,16 +48,15 @@ $(document).ready(
                 },
                 success: function(response) {
                     $("#showAllDeletedUsers").html(response);
-                    //USING DATA TABLE 
+                    // USING DATA TABLE 
                     $("table").DataTable({
                         order: [0, 'desc']
                     });
-                    // console.response(response);
                 }
             });
         }
 
-        //RESTORE A USER
+        // RESTORE A USER
         $("body").on("click", ".restoreUserIcon", function(e) {
             e.preventDefault();
 
@@ -98,23 +97,27 @@ $(document).ready(
 
         });
 
-    //check if notification exists
-    checkNotification();
-    function checkNotification(){
-        $.ajax({
-            url: 'assets/php/admin-action.php',
-            method: 'post',
-            data: {
-                action: 'checkNotification'
-            },
-            success: function(response) {
-                $("#checkNotification").html(response);
-            }
-        });
 
-    }
+
+        // check if notification exists
+        checkNotification();
+
+        function checkNotification() {
+            $.ajax({
+                url: 'assets/php/admin-action.php',
+                method: 'post',
+                data: {
+                    action: 'checkNotification'
+                },
+                success: function(response) {
+                    $("#checkNotification").html(response);
+                }
+            });
+
+        }
 
     });
+</script>
 
 </body>
 
