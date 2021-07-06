@@ -127,7 +127,7 @@ class Admin extends Database {
 
     //DELETE NOTE OF A USER NOTES
     public function deleteNoteOfUser($id){
-        $sql = "DELETE FROM notes WHERE id =: id";
+        $sql = "DELETE FROM notes WHERE id =:id";
 
         $stmt = $this->conn->prepare($sql);
         $stmt->execute(
