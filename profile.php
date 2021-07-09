@@ -239,7 +239,6 @@ $(document).ready(function() {
             //use FormData class since you send Image
             data: new FormData(this),
             success: function(response) {
-                // console.log(response);
                 location.reload();
             }
         });

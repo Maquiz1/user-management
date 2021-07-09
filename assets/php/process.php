@@ -130,9 +130,7 @@
             if (isset($_FILES['image']['name']) && ($_FILES['image']['name'] != "")) {
                 $imagePath = $_FILES['image']['name'];
                 $newImage = $folder.$_FILES['image']['name'];
-                // move_uploaded_file($_FILES['image']['tmp_name'], $newImage);
-                var_dump($imagePath);
-                var_dump(move_uploaded_file($_FILES['image']['tmp_name'], $newImage));
+                move_uploaded_file($_FILES['image']['tmp_name'], $newImage);
 
                 if ($oldImage != null) {
                     unlink($oldImage);
