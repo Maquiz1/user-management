@@ -1,3 +1,3 @@
-assets/php/core.php/
-lessapp.php/
-assets/php/config.php/
+assets/php/core.php
+lessapp.php
+assets/php/config.php
