@@ -32,7 +32,7 @@
                             Sign in to Account
                         </h1>
                         <hr class="my-3">
-                        <form action="assets/php/action.php" method="post" clsass="px-3" id="login-form">
+                        <form action="#" method="post" clsass="px-3" id="login-form">
                         <div id="loginAlert"></div>
                             <div class="input-group input-group-l form-group">
                                 <div class="input-group-prepend">
@@ -108,7 +108,7 @@
                             Create Account
                         </h1>
                         <hr class="my-3">
-                        <form action="" clsass="px-3" id="register-form" method="post">
+                        <form action="#" clsass="px-3" id="register-form" method="post">
                             <div id="regAlert"></div>
                             <div class="input-group input-group-l form-group">
                                 <div class="input-group-prepend">
@@ -288,8 +288,8 @@
                     data: $("#register-form").serialize()+'&action=register',   // serialize to put in array
                     success:function(response){
                     $('#register-btn').val('Sign Up'); 
-                    //    console.log(response);
-                    if(response){
+                    console.log(response);
+                    if($.trim(response) == 'register'){
                         window.location = 'home.php';
                     }else{
                         $("#regAlert").html(response);
@@ -302,30 +302,29 @@
 
 
         // Login ajax request
-        // $("#login-btn").click(function(e){
-        //     if($("#login-form")[0].checkValidity()){
-        //         //   PREVENT PAGE TO REFRESH
-        //         e.preventDefault();
-        //         $("#login-btn").val('Please wait...');
-        //         $.ajax({
-        //                 url: 'assets/php/action.php',
-        //                 method: 'post',
-        //                 data: $("#login-form").serialize()+'&action=login',   // serialize to put in array
-                        // success:function(response){
-                        // $('#login-btn').val('Sign in'); 
-                        // // console.log(response);  //print console to screen
-                        // if(response === 'login'){
-                        //     window.location = 'home.php';
-                        // }else{
-                        //     $("#loginAlert").html(response);
-                        // }
+        $("#login-btn").click(function(e){
+            if($("#login-form")[0].checkValidity()){
+                //   PREVENT PAGE TO REFRESH
+                e.preventDefault();
+                $("#login-btn").val('Please wait...');
+                $.ajax({
+                        url: 'assets/php/action.php',
+                        method: 'post',
+                        data: $("#login-form").serialize()+'&action=login',   // serialize to put in array
+                        success:function(response){
+                        $('#login-btn').val('Sign in'); 
+                        if($.trim(response) == 'login'){
+                            window.location = 'home.php';
+                        }else{
+                            $("#loginAlert").html(response);
+                        }
                         
-                        // }
-                    // });
+                        }
+                    });
                 
-            //     }
+                }
 
-            // });
+            });
 
         //FORGOT PASSWORD AJAX request
         $("#forgot-btn").click(function(e){

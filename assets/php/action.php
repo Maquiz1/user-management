@@ -55,7 +55,7 @@
                     $mail->isHTML(true);
                     $mail->Subject = 'E-mail Verification';
                     $mail->Body = '<h3>Click the link link to verify your E-mail.<br><a href="http://loalhost/user-management/verify_email.php?email='.$email.'">http://loalhost/user-management/verify_email.php?email='.$email.'</a><br>Regards<br>Admin!</h3>';
-                    $mail->send();
+                    // $mail->send();
                     
                 }else{
                     echo $user->showMessage('danger','Something went Wrong! try again');
@@ -66,8 +66,8 @@
 
 
     //HANDLE LOGIN AJAX REQUEST
-    // if(isset($_POST['action']) && $_POST['action'] == 'login'){
-        if (isset($_POST['login'])) {
+    if(isset($_POST['action']) && $_POST['action'] == 'login'){
+        // if (isset($_POST['login'])) {
             if (!empty($_POST['email']) && !empty($_POST['password'])) {
                 if (isset($_POST['email']) && isset($_POST['password'])) {
                     $email        = $user->test_input($_POST['email']);
@@ -87,9 +87,9 @@
                                 setcookie("email", "", 1, '/');
                                 setcookie("password", "", 1, '/');
                             }
-                            // echo 'login';
+                            echo 'login';
                             $_SESSION['user'] = $email;
-                            header('Location: ../../home.php'); // if using ajax remove this redirect
+                            // header('Location: ../../home.php'); // if using ajax remove this redirect
                         }
                       //if incorrect password
                         else {

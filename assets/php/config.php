@@ -1,8 +1,8 @@
 <?php
     class Database {
 
-        const USERNAME = 'manquiz92@gmail.com';
-        const PASSWORD = 'Jembe1992';
+        const USERNAME = 'manquiz92@mail.com';
+        const PASSWORD = 'fpiwiiubkpztbmzf';
 
 
         private $dsn = "mysql:host=localhost;dbname=user-management";

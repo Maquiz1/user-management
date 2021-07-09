@@ -185,6 +185,7 @@
             $mail->setFrom(Database::USERNAME,'Winstone');
             $mail->addAddress($cemail);     //use current email
             
+            
             //Content
             $mail->isHTML(true);
             $mail->Subject = 'E-mail Verification';
